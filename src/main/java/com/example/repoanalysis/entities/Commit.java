@@ -15,10 +15,12 @@ import java.util.Map;
 public class Commit {
     @JsonProperty("author")
     private Contributor author;
+    @SuppressWarnings("SpellCheckingInspection")
     @JsonFormat
             (shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'")
     private Date date;
 
+    @SuppressWarnings("unchecked")
     @JsonProperty("commit")
     private void unpackFromCommitProperty(Map<String,Object> commit) throws ParseException {
         Map<String,String> author = (Map<String,String>)commit.get("author");

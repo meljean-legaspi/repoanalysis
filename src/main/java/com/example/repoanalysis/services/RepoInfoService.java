@@ -20,21 +20,21 @@ import java.util.stream.Collectors;
 public class RepoInfoService {
 
     private final WebClient webClient;
-    private final WebClient.Builder builder;
+    private StringBuilder stringBuilder;
 
     @Autowired
     public RepoInfoService(){
-        builder = WebClient.builder();
+        WebClient.Builder builder = WebClient.builder();
         webClient = builder.baseUrl("https://api.github.com").build();
     }
 
     public List<Contributor> getContributors(RepoInfoRequest repoInfoRequest){
-        StringBuilder string = new StringBuilder();
-        string.append("/repos/");
-        string.append(repoInfoRequest.getRepoFullName());
-        string.append("/contributors");
+        stringBuilder = new StringBuilder();
+        stringBuilder.append("/repos/");
+        stringBuilder.append(repoInfoRequest.getRepoFullName());
+        stringBuilder.append("/contributors");
         Flux<Contributor> contributorFlux = webClient.get()
-                .uri(uriBuilder -> uriBuilder.path(string.toString())
+                .uri(uriBuilder -> uriBuilder.path(stringBuilder.toString())
                         .queryParam("page", String.valueOf(repoInfoRequest.getPage()))
                         .queryParam("per_page", String.valueOf(repoInfoRequest.getResultsPerPage()))
                         .build())
@@ -46,12 +46,12 @@ public class RepoInfoService {
     }
 
     private List<Commit> getLatestCommits(RepoInfoRequest repoInfoRequest){
-        StringBuilder string = new StringBuilder();
-        string.append("/repos/");
-        string.append(repoInfoRequest.getRepoFullName());
-        string.append("/commits");
+        stringBuilder = new StringBuilder();
+        stringBuilder.append("/repos/");
+        stringBuilder.append(repoInfoRequest.getRepoFullName());
+        stringBuilder.append("/commits");
         Flux<Commit> commitFlux = webClient.get()
-                .uri(uriBuilder -> uriBuilder.path(string.toString())
+                .uri(uriBuilder -> uriBuilder.path(stringBuilder.toString())
                         .queryParam("per_page", "100")
                         .build())
                 .header("Accept", "application/vnd.github.v3+json")
@@ -63,20 +63,17 @@ public class RepoInfoService {
 
     public Map<String, Long> getCommitsPerUser(RepoInfoRequest repoInfoRequest){
         List<Commit> commits = getLatestCommits(repoInfoRequest);
-        Map<String, Long> commitsPerUser = commits.stream()
+        return commits.stream()
                 .filter(c -> c.getAuthor() != null)
                 .map(c -> c.getAuthor().getUsername())
                 .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
-
-        return commitsPerUser;
     }
 
     public Map<String, Long> getCommitsTimeline(RepoInfoRequest repoInfoRequest) {
         List<Commit> commits = getLatestCommits(repoInfoRequest);
         SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
-        Map<String, Long> commitsTimeline = new TreeMap<>(commits.stream()
+        return new TreeMap<>(commits.stream()
                 .map(c -> dateFormatter.format(c.getDate()))
                 .collect(Collectors.groupingBy(Function.identity(), Collectors.counting())));
-        return commitsTimeline;
     }
 }

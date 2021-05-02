@@ -1,6 +1,6 @@
 function buildTimeline(labels, values, chartTitle) {
     let ctx = document.getElementById("timeline").getContext('2d');
-    let timelineChart = new Chart(ctx, {
+    return new Chart(ctx, {
         type: 'line',
         data: {
             labels: labels,
@@ -29,7 +29,6 @@ function buildTimeline(labels, values, chartTitle) {
             responsive: true, // Instruct chart js to respond nicely.
         }
     });
-    return timelineChart;
 }
 
 timelineJson = getJsonFromTable('timeline-table');

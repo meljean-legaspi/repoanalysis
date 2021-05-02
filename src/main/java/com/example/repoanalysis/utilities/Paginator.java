@@ -3,9 +3,8 @@ package com.example.repoanalysis.utilities;
 import com.example.repoanalysis.entities.Pagination;
 
 public class Paginator {
-    private Pagination pagination;
     public Pagination getPagination(int totalResults, int pageSize, int currentPage) {
-        pagination = new Pagination();
+        Pagination pagination = new Pagination();
         int totalPages = computeTotalPages(totalResults, pageSize);
         pagination.setTotalPages(totalPages);
         pagination.setLastPage(totalPages);

@@ -9,9 +9,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+@SuppressWarnings("SameReturnValue")
 @Controller
 public class SearchController {
-    private SearchService searchService;
+    private final SearchService searchService;
     public SearchController(SearchService searchService){
         this.searchService = searchService;
     }

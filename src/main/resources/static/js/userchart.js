@@ -1,6 +1,6 @@
 function buildGraph(labels, values, chartTitle) {
     let ctx = document.getElementById("userchart").getContext('2d');
-    let userChart = new Chart(ctx, {
+    return new Chart(ctx, {
         type: 'bar',
         data: {
             labels: labels,
@@ -16,7 +16,6 @@ function buildGraph(labels, values, chartTitle) {
             responsive: true, // Instruct chart js to respond nicely.
         }
     });
-    return userChart;
 }
 
 userStatsJson = getJsonFromTable('userstats-table')

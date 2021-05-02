@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 public class BookmarkController {
-    private BookmarkService bookmarkService;
+    private final BookmarkService bookmarkService;
 
     public BookmarkController(BookmarkService bookmarkService){
         this.bookmarkService = bookmarkService;
