@@ -1,0 +1,60 @@
+body {
+    font-family: Arial;
+    margin: 5%;
+}
+
+th {
+    text-align: center;
+}
+
+td {
+    padding: 0.5em;
+}
+
+.user-stats {
+    float: left;
+    width: 50%;
+}
+
+.commit-stats {
+    float: right;
+    width: 50%;
+}
+
+.stats-table {
+    text-align: center;
+}
+
+ul {
+    display: contents;
+}
+
+li {
+    list-style-type: none;
+    /*display: inline;*/
+    /*margin: 0.5em;*/
+}
+
+#bookmarks-section {
+    margin-top: 2em;
+}
+
+h1 > a:link {
+    text-decoration: none;
+    color: black;
+}
+
+h1 > a:visited {
+    text-decoration: none;
+    color: black;
+}
+
+h1 > a:hover {
+    text-decoration: none;
+    color: black;
+}
+
+h1 > a:active {
+    text-decoration: none;
+    color: black;
+}
